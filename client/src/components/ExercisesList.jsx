@@ -18,13 +18,13 @@ function ExercisesList({
   return (
     <>
       <List>
-        {exercises.map(({ name, muscleGroup, avatar_url, _id }) => (
+        {exercises.map(({ exerciseName, muscleGroup, avatar_url, _id }) => (
           <ListItem key={_id}>
             <ListItemAvatar>
               <Avatar alt="" src={avatar_url} />
             </ListItemAvatar>
             <ListItemText>
-              {name} ({muscleGroup})
+              {exerciseName} ({muscleGroup})
             </ListItemText>
             <IconButton
               aria-label="update"

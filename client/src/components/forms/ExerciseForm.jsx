@@ -7,14 +7,14 @@ import { TextField, Button } from '@mui/material';
 const schema = yup
   .object()
   .shape({
-    name: yup.string().max(30).required(),
+    exerciseName: yup.string().max(30).required(),
     muscleGroup: yup.string().max(30).required(),
     avatar_url: yup.string().url(),
   })
   .required();
 
 const defaults = {
-  name: '',
+  exerciseName: '',
   muscleGroup: '',
   avatar_url: '',
 };
@@ -51,16 +51,16 @@ export default function ExerciseForm({ exercise, submitHandler }) {
       <div style={formRowStyle}>
         <Controller
           control={control}
-          name="name"
+          name="exerciseName"
           defaultValue={''}
           render={({ field }) => (
             <TextField
               type="name"
               {...field}
-              label="name"
+              label="exerciseName"
               fullWidth
-              error={!!errors.name}
-              helperText={errors.name?.message}
+              error={!!errors.exerciseName}
+              helperText={errors.exerciseName?.message}
             />
           )}
         />

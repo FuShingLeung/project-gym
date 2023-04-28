@@ -1,8 +1,6 @@
 import React, { createContext, useState, useCallback } from 'react';
 import { EXERCISES_ENDPOINT, STORAGE_KEY } from '../../settings';
 
-import { nanoid } from 'nanoid';
-
 export const ExercisesContext = createContext({
   fetchExercises: () => [],
   addExercise: () => {},
@@ -46,34 +44,31 @@ export const ExercisesProvider = ({ children }) => {
   const addExercise = useCallback(
     async (formData) => {
       console.log('about to add', formData);
-      // try {
-      //   const response = await fetch(EXERCISES_ENDPOINT, {
-      //     method: 'POST',
-      //     headers: {
-      //       'Content-Type': 'application/json',
-      //     },
-      //     body: JSON.stringify(formData),
-      //   });
-      //   if (response.status !== 201) {
-      //     throw response;
-      //   }
-      //   const savedExercise = await response.json();
-      const savedExercise = EXERCISES_ENDPOINT;
-
-      console.log('got data', savedExercise);
-      // const newExercises = [...exercises, savedExercise];
-
-      formData._id = nanoid();
-      const newExercises = [...exercises, formData];
-      console.log('form data', formData);
-
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(newExercises));
-      setExercises(newExercises);
-      // } catch (err) {
-      //   console.log(err);
-      // }
+      if (formData.avatar_url === '') {
+        delete formData.avatar_url;
+      }
+      console.log(JSON.stringify(formData));
+      try {
+        const response = await fetch(EXERCISES_ENDPOINT, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+        if (response.status !== 201) {
+          throw response;
+        }
+        const savedExercise = await response.json();
+        console.log('got data', savedExercise);
+        const newExercises = [...exercises, savedExercise];
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(newExercises));
+        setExercises(newExercises);
+      } catch (err) {
+        console.log(err);
+      }
     },
-    [exercises],
+    [exercises, setExercises],
   );
 
   const updateExercise = useCallback(
@@ -97,67 +92,67 @@ export const ExercisesProvider = ({ children }) => {
         }
       }
 
-      // try {
-      //   const response = await fetch(`${EXERCISES_ENDPOINT}${id}`, {
-      //     method: 'PUT',
-      //     headers: {
-      //       'Content-Type': 'application/json',
-      //     },
-      //     body: JSON.stringify(updates),
-      //   });
+      try {
+        const response = await fetch(`${EXERCISES_ENDPOINT}/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(updates),
+        });
 
-      //   if (response.status !== 200) {
-      //     throw response;
-      //   }
+        if (response.status !== 200) {
+          throw response;
+        }
 
-      // Merge with formData
-      updatedExercise = {
-        ...oldExercise,
-        ...formData, // order here is important for the override!!
-      };
-      console.log('updatedExercise', updatedExercise);
-      const updatedExercises = [
-        ...exercises.slice(0, index),
-        updatedExercise,
-        ...exercises.slice(index + 1),
-      ];
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedExercises));
-      setExercises(updatedExercises);
-      // } catch (err) {
-      //   console.log(err);
-      // }
+        // Merge with formData
+        updatedExercise = {
+          ...oldExercise,
+          ...formData, // order here is important for the override!!
+        };
+        console.log('updatedExercise', updatedExercise);
+        const updatedExercises = [
+          ...exercises.slice(0, index),
+          updatedExercise,
+          ...exercises.slice(index + 1),
+        ];
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedExercises));
+        setExercises(updatedExercises);
+      } catch (err) {
+        console.log(err);
+      }
     },
-    [exercises],
+    [exercises, setExercises],
   );
 
   const deleteExercise = useCallback(
     async (id) => {
       let deletedExercise = null;
-      // try {
-      //   const response = await fetch(`${EXERCISES_ENDPOINT}${id}`, {
-      //     method: 'DELETE',
-      //     headers: {
-      //       'Content-Type': 'application/json',
-      //     },
-      //   });
-      //   if (response.status !== 204) {
-      //     throw response;
-      //   }
-      // Get index
-      const index = exercises.findIndex((exercise) => exercise._id === id);
-      deletedExercise = exercises[index];
-      const updatedExercises = [
-        ...exercises.slice(0, index),
-        ...exercises.slice(index + 1),
-      ];
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedExercises));
-      setExercises(updatedExercises);
-      console.log(`Deleted ${deletedExercise.name}`);
-      //   } catch (err) {
-      //     console.log(err);
-      //   }
+      try {
+        const response = await fetch(`${EXERCISES_ENDPOINT}/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        if (response.status !== 204) {
+          throw response;
+        }
+        // Get index
+        const index = exercises.findIndex((exercise) => exercise._id === id);
+        deletedExercise = exercises[index];
+        const updatedExercises = [
+          ...exercises.slice(0, index),
+          ...exercises.slice(index + 1),
+        ];
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedExercises));
+        setExercises(updatedExercises);
+        console.log(`Deleted ${deletedExercise.exerciseName}`);
+      } catch (err) {
+        console.log(err);
+      }
     },
-    [exercises],
+    [exercises, setExercises],
   );
 
   return (
