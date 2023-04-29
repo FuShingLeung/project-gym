@@ -1,5 +1,6 @@
 import React, { createContext, useState, useCallback } from 'react';
 import { EXERCISES_ENDPOINT, STORAGE_KEY } from '../../settings';
+import { useNavigate } from 'react-router-dom';
 
 export const ExercisesContext = createContext({
   fetchExercises: () => [],
@@ -13,6 +14,8 @@ export const ExercisesContext = createContext({
 });
 
 export const ExercisesProvider = ({ children }) => {
+  const navigate = useNavigate();
+
   const [exercises, setExercises] = useState(() => {
     return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
   });
@@ -64,6 +67,7 @@ export const ExercisesProvider = ({ children }) => {
         const newExercises = [...exercises, savedExercise];
         localStorage.setItem(STORAGE_KEY, JSON.stringify(newExercises));
         setExercises(newExercises);
+        navigate('/');
       } catch (err) {
         console.log(err);
       }
@@ -118,6 +122,7 @@ export const ExercisesProvider = ({ children }) => {
         ];
         localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedExercises));
         setExercises(updatedExercises);
+        navigate('/');
       } catch (err) {
         console.log(err);
       }
