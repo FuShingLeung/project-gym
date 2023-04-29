@@ -88,14 +88,13 @@ export const ExercisesProvider = ({ children }) => {
 
       // Send the differences, not the whole update
       const updates = {};
-
       for (const key of Object.keys(oldExercise)) {
         if (key === '_id') continue;
         if (oldExercise[key] !== formData[key]) {
           updates[key] = formData[key];
         }
       }
-
+      console.log(JSON.stringify(updates));
       try {
         const response = await fetch(`${EXERCISES_ENDPOINT}/${id}`, {
           method: 'PUT',

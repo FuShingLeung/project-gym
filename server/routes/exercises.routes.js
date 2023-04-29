@@ -27,8 +27,8 @@ router
   )
   .put(
     '/:id',
-    body('exerciseName').trim().isLength({ min: 3 }),
-    body('muscleGroup').trim().isLength({ min: 3 }),
+    // body('exerciseName').trim().isLength({ min: 3 }),
+    // body('muscleGroup').trim().isLength({ min: 3 }),
     (req, res) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {

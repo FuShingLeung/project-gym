@@ -41,6 +41,15 @@ function DesktopNavigation({
           ExercisesApp
         </Typography>
         <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+          <Button
+            sx={{ color: lightTextColor }}
+            component={NavLink}
+            to="/search"
+          >
+            Search
+          </Button>
+        </Box>
+        <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
           <Button sx={{ color: lightTextColor }} component={NavLink} to="/add">
             Add Exercise
           </Button>

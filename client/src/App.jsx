@@ -17,6 +17,7 @@ import { ExercisesProvider } from './components/contexts/exercise.context';
 import ExercisesListPage from './pages/List';
 import Add from './pages/Add';
 import Update from './pages/Update';
+import Search from './pages/Search';
 import NotFound from './pages/NotFound';
 
 import CssBaseline from '@mui/material/CssBaseline';
@@ -32,6 +33,7 @@ function App() {
               <Route index element={<ExercisesListPage />} />
               <Route path="/add" element={<Add />} />
               <Route path="/update/:id" element={<Update />} />
+              <Route path="/search" element={<Search />} />
               <Route path="/*" element={<NotFound />} />
             </Route>
           </Routes>
