@@ -13,7 +13,7 @@ function Update() {
   return (
     <>
       <Typography variant="h2" component="h1" sx={{ marginBottom: 2 }}>
-        Update {id}
+        Update {exercise.exerciseName}
       </Typography>
       <ExerciseForm exercise={exercise} submitHandler={updateExercise} />
     </>
