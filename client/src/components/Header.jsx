@@ -19,10 +19,6 @@ export default function DrawerAppBar(props, Props) {
         mobileOpen={mobileOpen}
         handleDrawerToggle={handleDrawerToggle}
       />
-      <Box component="main" sx={{ p: 3 }}>
-        <Toolbar />
-        <Typography></Typography>
-      </Box>
     </Box>
   );
 }

@@ -18,7 +18,7 @@ function ExercisesListPage() {
 
   return (
     <>
-      <Typography variant="h1" component="h2">
+      <Typography variant="h4" component="h4">
         Exercises
       </Typography>
       <ExercisesList exercises={exercises} deleteHandler={deleteHandler} />

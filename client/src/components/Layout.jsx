@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import TempHeader from './TempHeader';
+import Header from './Header';
 import Container from '@mui/material/Container';
 
 function Layout() {
@@ -8,7 +8,7 @@ function Layout() {
     <>
       <header>
         <h1>Exercises App</h1>
-        <TempHeader />
+        <Header />
       </header>
       <main>
         <Container maxWidth="md">

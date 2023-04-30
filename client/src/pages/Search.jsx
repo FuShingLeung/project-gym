@@ -4,11 +4,13 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import { ExercisesContext } from '../components/contexts/exercise.context';
-import ExercisesList from '../components/ExercisesList';
 import TextField from '@mui/material/TextField';
 
+import ExercisesList from '../components/ExercisesList';
+import SearchList from '../components/SearchList';
+
 function Search() {
-  const [textFieldValue, setTextFieldValue] = useState('');
+  const [searchValue, setSearchValue] = useState('');
 
   const { addExercise } = useContext(ExercisesContext);
 
@@ -20,8 +22,8 @@ function Search() {
   }, [fetchExercises]);
 
   useEffect(() => {
-    console.log('Text field value', textFieldValue);
-  }, [textFieldValue]);
+    console.log('Search value', searchValue);
+  }, [searchValue]);
 
   return (
     <>
@@ -32,17 +34,21 @@ function Search() {
         }}
         noValidate
         autoComplete="off"
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
       >
-        <Typography variant="h4" component="h4" display="inline-block">
+        <Typography variant="h4" component="h4">
           Search for exercises
         </Typography>
         <TextField
           id="outlined-basic"
           label="Search"
           variant="outlined"
-          onChange={(e) => setTextFieldValue(e.target.value)}
+          onChange={(e) => setSearchValue(e.target.value)}
         />
       </Box>
+      {/* <SearchList exercises={exercises} /> */}
       <ExercisesList exercises={exercises} />
     </>
   );

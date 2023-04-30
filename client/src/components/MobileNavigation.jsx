@@ -38,12 +38,29 @@ function MobileNavigation({
           <Divider />
           <List>
             <ListItem>
-              <ListItemButton sx={{ textAlign: 'left' }} component={NavLink} to="/">
+              <ListItemButton
+                sx={{ textAlign: 'left' }}
+                component={NavLink}
+                to="/"
+              >
                 <ListItemText primary={'Exercise List'} />
               </ListItemButton>
             </ListItem>
             <ListItem>
-              <ListItemButton sx={{ textAlign: 'left' }} component={NavLink} to="/add">
+              <ListItemButton
+                sx={{ textAlign: 'left' }}
+                component={NavLink}
+                to="/search"
+              >
+                <ListItemText primary={'Search Exercise'} />
+              </ListItemButton>
+            </ListItem>
+            <ListItem>
+              <ListItemButton
+                sx={{ textAlign: 'left' }}
+                component={NavLink}
+                to="/add"
+              >
                 <ListItemText primary={'Add Exercise'} />
               </ListItemButton>
             </ListItem>
