@@ -8,6 +8,7 @@ import TextField from '@mui/material/TextField';
 
 import ExercisesList from '../components/ExercisesList';
 import SearchList from '../components/SearchList';
+import FilterButtons from '../components/FilterButtons';
 
 function Search() {
   const [searchValue, setSearchValue] = useState('');
@@ -27,18 +28,8 @@ function Search() {
 
   return (
     <>
-      <Box
-        component="form"
-        sx={{
-          '& > :not(style)': { m: 1, width: '25ch' },
-        }}
-        noValidate
-        autoComplete="off"
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-      >
-        <Typography variant="h4" component="h4">
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Typography variant="h4" component="h4" display="inline">
           Search for exercises
         </Typography>
         <TextField
@@ -48,6 +39,10 @@ function Search() {
           onChange={(e) => setSearchValue(e.target.value)}
         />
       </Box>
+      <Box>
+        <FilterButtons />
+      </Box>
+
       {/* <SearchList exercises={exercises} /> */}
       <ExercisesList exercises={exercises} />
     </>

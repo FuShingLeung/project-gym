@@ -12,7 +12,7 @@ function Add() {
 
   return (
     <>
-      <Typography variant="h2" component="h1">
+      <Typography variant="h4" component="h4">
         Add Exercise
       </Typography>
       <ExerciseForm submitHandler={submitHandler} />
