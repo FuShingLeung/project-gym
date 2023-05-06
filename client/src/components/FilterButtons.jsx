@@ -20,10 +20,20 @@ function FilterButtons({ exercises = [], filterHandler = () => {} }) {
             </Button>
           </ListItem>
           <ListItem>
-            <Button variant="outlined">Shoulders</Button>
+            <Button
+              variant="outlined"
+              onClick={() => filterHandler('Shoulders', 'muscleGroup')}
+            >
+              Shoulders
+            </Button>
           </ListItem>
           <ListItem>
-            <Button variant="outlined">Legs</Button>
+            <Button
+              variant="outlined"
+              onClick={() => filterHandler('Legs', 'muscleGroup')}
+            >
+              Legs
+            </Button>
           </ListItem>
         </Box>
       </List>

@@ -8,6 +8,7 @@ export const ExercisesContext = createContext({
   updateExercise: () => {},
   deleteExercise: () => {},
   filterExercise: () => {},
+  resetFilteredExercise: () => {},
   loaded: false,
   loading: false,
   error: null,
@@ -21,6 +22,7 @@ export const ExercisesProvider = ({ children }) => {
   const [exercises, setExercises] = useState(() => {
     return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
   });
+  const [filteredExercises, setFilteredExercises] = useState(exercises);
   const [loading, setLoading] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(null);
@@ -169,22 +171,27 @@ export const ExercisesProvider = ({ children }) => {
         (exercise) => exercise[searchKey] === searchValue,
       );
       console.log('filteredList', filteredList);
-      return filteredList;
+      setFilteredExercises(filteredList);
     },
     [exercises, setExercises],
   );
 
+  const resetFilteredExercise = useCallback(async () => {
+    setFilteredExercises(exercises);
+  });
   return (
     <ExercisesContext.Provider
       value={{
         exercises,
         loading,
         error,
+        filteredExercises,
         fetchExercises,
         addExercise,
         updateExercise,
         deleteExercise,
         filterExercise,
+        resetFilteredExercise,
       }}
     >
       {children}

@@ -13,34 +13,34 @@ import Box from '@mui/material/Box';
 import FilterButtons from './FilterButtons';
 
 function FilteredList({
-  exercises = [],
+  filteredExercises = [],
   searchValue = '',
   filters = [],
   filterHandler = () => {},
 }) {
-  // const [filteredExericse, setFilteredExercise] = useState(exercises);
-  
   for (filter of filters) {
   }
   return (
     <>
       <Box>
-        <FilterButtons exercises={exercises} filterHandler={filterHandler} />
+        <FilterButtons filterHandler={filterHandler} />
       </Box>
       <List>
-        {exercises.map(({ exerciseName, muscleGroup, avatar_url, _id }) => (
-          <ListItem key={_id}>
-            <ListItemAvatar>
-              <Avatar alt="" src={avatar_url} />
-            </ListItemAvatar>
-            <ListItemText>
-              {exerciseName} ({muscleGroup})
-            </ListItemText>
-            <IconButton aria-label="favouriteBorder">
-              <FavoriteBorderIcon />
-            </IconButton>
-          </ListItem>
-        ))}
+        {filteredExercises.map(
+          ({ exerciseName, muscleGroup, avatar_url, _id }) => (
+            <ListItem key={_id}>
+              <ListItemAvatar>
+                <Avatar alt="" src={avatar_url} />
+              </ListItemAvatar>
+              <ListItemText>
+                {exerciseName} ({muscleGroup})
+              </ListItemText>
+              <IconButton aria-label="favouriteBorder">
+                <FavoriteBorderIcon />
+              </IconButton>
+            </ListItem>
+          ),
+        )}
       </List>
     </>
   );
