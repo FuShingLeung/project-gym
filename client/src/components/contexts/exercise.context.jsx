@@ -7,7 +7,8 @@ export const ExercisesContext = createContext({
   addExercise: () => {},
   updateExercise: () => {},
   deleteExercise: () => {},
-  filterExercise: () => {},
+  filterExact: () => {},
+  filterTextfield: () => {},
   resetFilteredExercise: () => {},
   loaded: false,
   loading: false,
@@ -163,14 +164,22 @@ export const ExercisesProvider = ({ children }) => {
     [exercises, setExercises],
   );
 
-  const filterExercise = useCallback(
+  const filterExact = useCallback(
     async (searchValue, searchKey) => {
-      console.log('searchValue', searchValue);
-      console.log('searchKey', searchKey);
       let filteredList = exercises.filter(
-        (exercise) => exercise[searchKey] === searchValue,
+        (exercise) => searchValue === exercise[searchKey],
       );
-      console.log('filteredList', filteredList);
+      setFilteredExercises(filteredList);
+    },
+    [exercises, setExercises],
+  );
+
+  const filterTextfield = useCallback(
+    async (searchValue, searchKey) => {
+      let pattern = new RegExp('^' + searchValue, 'i');
+      let filteredList = exercises.filter((exercise) =>
+        exercise[searchKey].match(pattern),
+      );
       setFilteredExercises(filteredList);
     },
     [exercises, setExercises],
@@ -190,7 +199,8 @@ export const ExercisesProvider = ({ children }) => {
         addExercise,
         updateExercise,
         deleteExercise,
-        filterExercise,
+        filterExact,
+        filterTextfield,
         resetFilteredExercise,
       }}
     >
