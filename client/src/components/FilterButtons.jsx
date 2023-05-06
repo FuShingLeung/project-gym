@@ -6,7 +6,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Box from '@mui/material/Box';
 
-function FilterButtons({ exercises = [], filterHandler = () => {} }) {
+function FilterButtons({ filteredExercises = [], filterHandler = () => {} }) {
   return (
     <>
       <List>
@@ -14,7 +14,9 @@ function FilterButtons({ exercises = [], filterHandler = () => {} }) {
           <ListItem>
             <Button
               variant="outlined"
-              onClick={() => filterHandler('Chest', 'muscleGroup')}
+              onClick={() =>
+                filterHandler(filteredExercises, 'Chest', 'muscleGroup')
+              }
             >
               Chest
             </Button>
@@ -22,7 +24,9 @@ function FilterButtons({ exercises = [], filterHandler = () => {} }) {
           <ListItem>
             <Button
               variant="outlined"
-              onClick={() => filterHandler('Shoulders', 'muscleGroup')}
+              onClick={() =>
+                filterHandler(filteredExercises, 'Shoulders', 'muscleGroup')
+              }
             >
               Shoulders
             </Button>
@@ -30,7 +34,9 @@ function FilterButtons({ exercises = [], filterHandler = () => {} }) {
           <ListItem>
             <Button
               variant="outlined"
-              onClick={() => filterHandler('Legs', 'muscleGroup')}
+              onClick={() =>
+                filterHandler(filteredExercises, 'Legs', 'muscleGroup')
+              }
             >
               Legs
             </Button>

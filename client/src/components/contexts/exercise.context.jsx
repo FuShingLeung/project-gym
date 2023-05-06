@@ -165,8 +165,8 @@ export const ExercisesProvider = ({ children }) => {
   );
 
   const filterExact = useCallback(
-    async (searchValue, searchKey) => {
-      let filteredList = exercises.filter(
+    async (list, searchValue, searchKey) => {
+      let filteredList = list.filter(
         (exercise) => searchValue === exercise[searchKey],
       );
       setFilteredExercises(filteredList);
@@ -175,9 +175,9 @@ export const ExercisesProvider = ({ children }) => {
   );
 
   const filterTextfield = useCallback(
-    async (searchValue, searchKey) => {
+    async (list, searchValue, searchKey) => {
       let pattern = new RegExp('^' + searchValue, 'i');
-      let filteredList = exercises.filter((exercise) =>
+      let filteredList = list.filter((exercise) =>
         exercise[searchKey].match(pattern),
       );
       setFilteredExercises(filteredList);

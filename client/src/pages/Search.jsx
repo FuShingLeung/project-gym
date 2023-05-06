@@ -44,7 +44,9 @@ function Search() {
           id="outlined-basic"
           label="Search"
           variant="outlined"
-          onChange={(e) => filterTextfield(e.target.value, 'exerciseName')}
+          onChange={(e) =>
+            filterTextfield(filteredExercises, e.target.value, 'exerciseName')
+          }
         />
       </Box>
       {/* <ExercisesList exercises={exercises} /> */}

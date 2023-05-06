@@ -12,18 +12,14 @@ import Box from '@mui/material/Box';
 
 import FilterButtons from './FilterButtons';
 
-function FilteredList({
-  filteredExercises = [],
-  searchValue = '',
-  filters = [],
-  filterHandler = () => {},
-}) {
-  for (filter of filters) {
-  }
+function FilteredList({ filteredExercises = [], filterHandler = () => {} }) {
   return (
     <>
       <Box>
-        <FilterButtons filterHandler={filterHandler} />
+        <FilterButtons
+          filteredExercises={filteredExercises}
+          filterHandler={filterHandler}
+        />
       </Box>
       <List>
         {filteredExercises.map(
