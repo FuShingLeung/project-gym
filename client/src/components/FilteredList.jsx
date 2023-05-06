@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import List from '@mui/material/List';
@@ -7,19 +7,26 @@ import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Box from '@mui/material/Box';
 
 import FilterButtons from './FilterButtons';
 
-function ExercisesList({
+function FilteredList({
   exercises = [],
-  updateHandler = () => {},
-  deleteHandler = () => {},
+  searchValue = '',
+  filters = [],
+  filterHandler = () => {},
 }) {
+  // const [filteredExericse, setFilteredExercise] = useState(exercises);
+  
+  for (filter of filters) {
+  }
   return (
     <>
+      <Box>
+        <FilterButtons exercises={exercises} filterHandler={filterHandler} />
+      </Box>
       <List>
         {exercises.map(({ exerciseName, muscleGroup, avatar_url, _id }) => (
           <ListItem key={_id}>
@@ -29,19 +36,8 @@ function ExercisesList({
             <ListItemText>
               {exerciseName} ({muscleGroup})
             </ListItemText>
-            <IconButton
-              aria-label="update"
-              to={`/update/${_id}`}
-              component={Link}
-            >
-              <EditIcon />
-            </IconButton>
-            <IconButton
-              edge="end"
-              aria-label="delete"
-              onClick={() => deleteHandler(_id)}
-            >
-              <DeleteIcon />
+            <IconButton aria-label="favouriteBorder">
+              <FavoriteBorderIcon />
             </IconButton>
           </ListItem>
         ))}
@@ -50,4 +46,4 @@ function ExercisesList({
   );
 }
 
-export default ExercisesList;
+export default FilteredList;

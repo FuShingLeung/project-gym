@@ -7,24 +7,24 @@ import { ExercisesContext } from '../components/contexts/exercise.context';
 import TextField from '@mui/material/TextField';
 
 import ExercisesList from '../components/ExercisesList';
-import SearchList from '../components/SearchList';
 import FilterButtons from '../components/FilterButtons';
+import FilteredList from '../components/FilteredList';
 
 function Search() {
   const [searchValue, setSearchValue] = useState('');
 
   const { addExercise } = useContext(ExercisesContext);
 
-  const { exercises, fetchExercises, deleteExercise } =
+  const { exercises, fetchExercises, deleteExercise, filterExercise } =
     useContext(ExercisesContext);
+
+  const filterHandler = (filterValue, searchKey) => {
+    filterExercise(filterValue, searchKey);
+  };
 
   useEffect(() => {
     fetchExercises();
   }, [fetchExercises]);
-
-  useEffect(() => {
-    console.log('Search value', searchValue);
-  }, [searchValue]);
 
   return (
     <>
@@ -39,12 +39,8 @@ function Search() {
           onChange={(e) => setSearchValue(e.target.value)}
         />
       </Box>
-      <Box>
-        <FilterButtons />
-      </Box>
-
-      {/* <SearchList exercises={exercises} /> */}
-      <ExercisesList exercises={exercises} />
+      {/* <ExercisesList exercises={exercises} /> */}
+      <FilteredList exercises={exercises} filterHandler={filterHandler} />
     </>
   );
 }

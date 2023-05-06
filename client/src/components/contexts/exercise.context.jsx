@@ -7,10 +7,12 @@ export const ExercisesContext = createContext({
   addExercise: () => {},
   updateExercise: () => {},
   deleteExercise: () => {},
+  filterExercise: () => {},
   loaded: false,
   loading: false,
   error: null,
   exercises: [],
+  filteredExercises: [],
 });
 
 export const ExercisesProvider = ({ children }) => {
@@ -159,6 +161,19 @@ export const ExercisesProvider = ({ children }) => {
     [exercises, setExercises],
   );
 
+  const filterExercise = useCallback(
+    async (searchValue, searchKey) => {
+      console.log('searchValue', searchValue);
+      console.log('searchKey', searchKey);
+      let filteredList = exercises.filter(
+        (exercise) => exercise[searchKey] === searchValue,
+      );
+      console.log('filteredList', filteredList);
+      return filteredList;
+    },
+    [exercises, setExercises],
+  );
+
   return (
     <ExercisesContext.Provider
       value={{
@@ -169,6 +184,7 @@ export const ExercisesProvider = ({ children }) => {
         addExercise,
         updateExercise,
         deleteExercise,
+        filterExercise,
       }}
     >
       {children}

@@ -16,8 +16,6 @@ function ExercisesListPage() {
     deleteExercise(id);
   };
 
-  console.log(exercises);
-
   return (
     <>
       <Typography variant="h4" component="h4">
