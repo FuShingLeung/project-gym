@@ -20,6 +20,8 @@ export const ExercisesContext = createContext({
 export const ExercisesProvider = ({ children }) => {
   const navigate = useNavigate();
 
+  const [filtersList, setFiltersList] = useState(() => []);
+
   const [exercises, setExercises] = useState(() => {
     return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
   });
@@ -165,21 +167,47 @@ export const ExercisesProvider = ({ children }) => {
   );
 
   const filterExact = useCallback(
-    async (list, searchValue, searchKey) => {
-      let filteredList = list.filter(
-        (exercise) => searchValue === exercise[searchKey],
-      );
+    async (searchValue) => {
+      if (filtersList.indexOf(searchValue) == -1) {
+        filtersList.push(searchValue);
+      }
+      let filteredList = [];
+
+      for (const value of filtersList) {
+        let valueList = exercises.filter(
+          (exercise) => value === exercise.muscleGroup,
+        );
+        filteredList = filteredList.concat(valueList);
+      }
       setFilteredExercises(filteredList);
     },
     [exercises, setExercises],
   );
 
   const filterTextfield = useCallback(
-    async (list, searchValue, searchKey) => {
-      let pattern = new RegExp('^' + searchValue, 'i');
-      let filteredList = list.filter((exercise) =>
-        exercise[searchKey].match(pattern),
-      );
+    async (searchValue) => {
+      let filteredList = [];
+      if (filtersList !== []) {
+        for (const value of filtersList) {
+          let valueList = exercises.filter(
+            (exercise) => value === exercise.muscleGroup,
+          );
+          filteredList = filteredList.concat(valueList);
+          console.log('before textfield', filteredList);
+          let pattern = new RegExp('^' + searchValue, 'i');
+          filteredList = filteredList.filter((exercise) =>
+            exercise.exerciseName.match(pattern),
+          );
+          console.log('after textfield', filteredList);
+        }
+      } else {
+        let pattern = new RegExp('^' + searchValue, 'i');
+        filteredList = exercises.filter((exercise) =>
+          exercise.exerciseName.match(pattern),
+        );
+        console.log(filteredList);
+      }
+
       setFilteredExercises(filteredList);
     },
     [exercises, setExercises],

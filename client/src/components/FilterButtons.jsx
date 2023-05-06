@@ -12,33 +12,35 @@ function FilterButtons({ filteredExercises = [], filterHandler = () => {} }) {
       <List>
         <Box display="flex">
           <ListItem>
-            <Button
-              variant="outlined"
-              onClick={() =>
-                filterHandler(filteredExercises, 'Chest', 'muscleGroup')
-              }
-            >
+            <Button variant="outlined" onClick={() => filterHandler('Chest')}>
               Chest
             </Button>
           </ListItem>
+
           <ListItem>
             <Button
               variant="outlined"
-              onClick={() =>
-                filterHandler(filteredExercises, 'Shoulders', 'muscleGroup')
-              }
+              onClick={() => filterHandler('Shoulders')}
             >
               Shoulders
             </Button>
           </ListItem>
+
           <ListItem>
-            <Button
-              variant="outlined"
-              onClick={() =>
-                filterHandler(filteredExercises, 'Legs', 'muscleGroup')
-              }
-            >
+            <Button variant="outlined" onClick={() => filterHandler('Legs')}>
               Legs
+            </Button>
+          </ListItem>
+
+          <ListItem>
+            <Button variant="outlined" onClick={() => filterHandler('Biceps')}>
+              Biceps
+            </Button>
+          </ListItem>
+
+          <ListItem>
+            <Button variant="outlined" onClick={() => filterHandler('Triceps')}>
+              Triceps
             </Button>
           </ListItem>
         </Box>
