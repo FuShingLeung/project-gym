@@ -20,8 +20,6 @@ export const ExercisesContext = createContext({
 export const ExercisesProvider = ({ children }) => {
   const navigate = useNavigate();
 
-  const [filtersList, setFiltersList] = useState(() => []);
-
   const [exercises, setExercises] = useState(() => {
     return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
   });
@@ -167,47 +165,46 @@ export const ExercisesProvider = ({ children }) => {
   );
 
   const filterExact = useCallback(
-    async (searchValue) => {
-      if (filtersList.indexOf(searchValue) == -1) {
-        filtersList.push(searchValue);
-      }
+    async (filterInput) => {
       let filteredList = [];
+      let filterList = filterInput;
 
-      for (const value of filtersList) {
-        let valueList = exercises.filter(
-          (exercise) => value === exercise.muscleGroup,
-        );
-        filteredList = filteredList.concat(valueList);
+      if (filterList.length !== 0) {
+        for (let filter of filterList) {
+          filter = filter.charAt(0).toUpperCase() + filter.slice(1);
+
+          let valueList = exercises.filter(
+            (exercise) => filter === exercise.muscleGroup,
+          );
+          filteredList = filteredList.concat(valueList);
+        }
+      } else {
+        filteredList = exercises;
       }
       setFilteredExercises(filteredList);
     },
-    [exercises, setExercises],
+    [filteredExercises, setFilteredExercises],
   );
 
   const filterTextfield = useCallback(
-    async (searchValue) => {
-      let filteredList = [];
-      if (filtersList !== []) {
-        for (const value of filtersList) {
-          let valueList = exercises.filter(
+    async (list, searchValue) => {
+      let filteredList = filteredExercises;
+      if (searchValue !== '') {
+        console.log(list);
+        for (const value of list) {
+          let valueList = list.filter(
             (exercise) => value === exercise.muscleGroup,
           );
           filteredList = filteredList.concat(valueList);
-          console.log('before textfield', filteredList);
           let pattern = new RegExp('^' + searchValue, 'i');
           filteredList = filteredList.filter((exercise) =>
             exercise.exerciseName.match(pattern),
           );
-          console.log('after textfield', filteredList);
         }
       } else {
-        let pattern = new RegExp('^' + searchValue, 'i');
-        filteredList = exercises.filter((exercise) =>
-          exercise.exerciseName.match(pattern),
-        );
-        console.log(filteredList);
+        console.log(filteredExercises);
+        filteredList = filteredExercises;
       }
-
       setFilteredExercises(filteredList);
     },
     [exercises, setExercises],

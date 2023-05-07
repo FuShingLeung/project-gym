@@ -18,7 +18,6 @@ function Search() {
     filteredExercises,
     resetFilteredExercise,
     fetchExercises,
-    deleteExercise,
     filterExact,
     filterTextfield,
   } = useContext(ExercisesContext);
@@ -44,7 +43,7 @@ function Search() {
           id="outlined-basic"
           label="Search"
           variant="outlined"
-          onChange={(e) => filterTextfield(e.target.value)}
+          onChange={(e) => filterTextfield(filteredExercises, e.target.value)}
         />
       </Box>
       {/* <ExercisesList exercises={exercises} /> */}
