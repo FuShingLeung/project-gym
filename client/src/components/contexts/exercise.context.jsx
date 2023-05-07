@@ -197,7 +197,7 @@ export const ExercisesProvider = ({ children }) => {
   );
 
   const filterTextfield = useCallback(
-    async (list, searchValue) => {
+    async (searchValue) => {
       filterList = JSON.parse(localStorage.getItem('filterList')) || [];
 
       if (searchValue !== '') {
