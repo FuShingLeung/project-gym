@@ -20,6 +20,10 @@ export const ExercisesContext = createContext({
 export const ExercisesProvider = ({ children }) => {
   const navigate = useNavigate();
 
+  let [filterList, setFilterList] = useState(() => {
+    return JSON.parse(localStorage.getItem('filterList')) || [];
+  });
+
   const [exercises, setExercises] = useState(() => {
     return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
   });
@@ -166,46 +170,59 @@ export const ExercisesProvider = ({ children }) => {
 
   const filterExact = useCallback(
     async (filterInput) => {
-      let filteredList = [];
-      let filterList = filterInput;
+      if (filterInput.length !== 0) {
+        let filteredList = [];
+        filterList = [...filterInput];
 
-      if (filterList.length !== 0) {
-        for (let filter of filterList) {
-          filter = filter.charAt(0).toUpperCase() + filter.slice(1);
+        if (filterList.length !== 0) {
+          for (let filter of filterList) {
+            filter = filter.charAt(0).toUpperCase() + filter.slice(1);
 
-          let valueList = exercises.filter(
-            (exercise) => filter === exercise.muscleGroup,
-          );
-          filteredList = filteredList.concat(valueList);
+            let valueList = exercises.filter(
+              (exercise) => filter === exercise.muscleGroup,
+            );
+            filteredList = filteredList.concat(valueList);
+          }
+        } else {
+          filteredList = exercises;
         }
+        setFilteredExercises(filteredList);
+        localStorage.setItem('filterList', JSON.stringify(filterList));
       } else {
-        filteredList = exercises;
+        setFilteredExercises(exercises);
+        localStorage.setItem('filterList', JSON.stringify(filterInput));
       }
-      setFilteredExercises(filteredList);
     },
     [filteredExercises, setFilteredExercises],
   );
 
   const filterTextfield = useCallback(
     async (list, searchValue) => {
-      let filteredList = filteredExercises;
+      filterList = JSON.parse(localStorage.getItem('filterList')) || [];
+
       if (searchValue !== '') {
-        console.log(list);
-        for (const value of list) {
-          let valueList = list.filter(
-            (exercise) => value === exercise.muscleGroup,
-          );
-          filteredList = filteredList.concat(valueList);
-          let pattern = new RegExp('^' + searchValue, 'i');
-          filteredList = filteredList.filter((exercise) =>
-            exercise.exerciseName.match(pattern),
-          );
+        let pattern = new RegExp('^' + searchValue, 'i');
+        let filteredList = exercises.filter((exercise) =>
+          exercise.exerciseName.match(pattern),
+        );
+
+        let results = [];
+
+        if (filterList.length !== 0) {
+          for (let filter of filterList) {
+            filter = filter.charAt(0).toUpperCase() + filter.slice(1);
+            let valueList = filteredList.filter(
+              (exercise) => filter === exercise.muscleGroup,
+            );
+            results = results.concat(valueList);
+          }
+          setFilteredExercises(results);
+        } else {
+          setFilteredExercises(filteredList);
         }
       } else {
-        console.log(filteredExercises);
-        filteredList = filteredExercises;
+        filterExact(filterList);
       }
-      setFilteredExercises(filteredList);
     },
     [exercises, setExercises],
   );

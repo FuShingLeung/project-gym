@@ -10,10 +10,6 @@ import Button from '@mui/material/Button';
 import FilteredList from '../components/FilteredList';
 
 function Search() {
-  const [searchValue, setSearchValue] = useState('');
-
-  const { addExercise } = useContext(ExercisesContext);
-
   const {
     filteredExercises,
     resetFilteredExercise,
